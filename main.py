@@ -2,6 +2,22 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
+def run_video(video):
+    vid = cv2.VideoCapture(video)
+    while (vid.isOpened()):
+        ret, frame = vid.read()
+        if not ret:
+            break
+        
+        # Process the frame here
+        cv2.imshow('Video', frame)
+        
+        if cv2.waitKey(10) & 0xFF == ord('q'):  # Delay between frames set to 10 milliseconds
+            break
+    
+    vid.release()
+    cv2.destroyAllWindows()
+
 def get_two_frames(video,time):
     #load in video
     cap = cv2.VideoCapture(video)
@@ -17,16 +33,6 @@ def get_two_frames(video,time):
     frame2 = cv2.cvtColor(frame2,cv2.COLOR_BGR2RGB)
 
     return frame1,frame2
-
-frame1, frame2 = get_two_frames('vid.mp4',.3)
-plt.subplot(2,1,1)
-plt.imshow(frame1)
-
-
-plt.subplot(2,1,2)
-plt.imshow(frame2)
-plt.show()
-
 
 
 def find_matches(frame1,frame2):
@@ -44,3 +50,16 @@ def find_matches(frame1,frame2):
     img3 = cv2.drawMatches(frame1,kp1,frame2,kp2,matches[:],None,flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
     plt.imshow(img3)
     plt.show()
+
+
+# frame1, frame2 = get_two_frames('vid.mp4',.3)
+# plt.subplot(2,1,1)
+# plt.imshow(frame1)
+
+
+# plt.subplot(2,1,2)
+# plt.imshow(frame2)
+# plt.show()
+run_video('vid.mp4')
+
+
