@@ -8,7 +8,7 @@ def run_video(video):
         ret, frame = vid.read()
         if not ret:
             break
-        
+        frame = cv2.resize(frame,(1500,1000))
         # Process the frame here
         cv2.imshow('Video', frame)
         
